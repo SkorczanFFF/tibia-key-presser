@@ -64,6 +64,17 @@ class KeyPressApp:
 
         self.toggle_buttons()
 
+        # Set up protocol for window close
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    # Include the rest of your class methods here...
+
+    def on_closing(self):
+        """Handle the window close event."""
+        if self.running:
+            self.stop()  # Stop the key pressing threads
+        self.root.destroy()  # Close the Tkinter window
+
     def create_key_delay_pair(self, index):
         """Create a key-delay pair and place it on the grid."""
         # Key label
