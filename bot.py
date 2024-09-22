@@ -19,10 +19,6 @@ class KeyPressApp:
         self.main_frame = tk.Frame(root)
         self.main_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # Status label for showing messages
-        self.status_label = tk.Label(self.main_frame, text="", fg="red")
-        self.status_label.grid(row=0, columnspan=6, padx=10, pady=5)
-
         # Frame for key and delay entries
         self.entries_frame = tk.Frame(self.main_frame)
         self.entries_frame.grid(row=1, column=0, columnspan=6, pady=5, sticky="ew")
@@ -51,6 +47,10 @@ class KeyPressApp:
         # Place start/stop buttons
         self.start_button.grid(row=0, column=1, padx=10, pady=10, sticky="ew")
         self.stop_button.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
+
+        # Status label for showing messages (moved to the right of the buttons)
+        self.status_label = tk.Label(self.button_frame, text="", fg="red")
+        self.status_label.grid(row=0, column=3, padx=10, pady=5, sticky="ew")
 
         # Configure grid weights for resizing
         self.main_frame.grid_columnconfigure(1, weight=1)
