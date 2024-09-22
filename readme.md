@@ -17,7 +17,7 @@ This is a **Tibia Key Presser** application designed to automate repetitive key 
   The key pressing script can be easily started or stopped with intuitive buttons. Once started, the defined keys will be automatically pressed with the set delays.
 
 - **Connects to the Tibia window**  
-  The application automatically detects the Tibia game window and sends key presses directly to it. When window is properly found, window name will change to "Tibia Key Presser - YOUR CHAR NAME"
+  The application automatically detects the Tibia game window and sends key presses directly to it. When Tibia is properly found, window name will change to **"Tibia Key Presser - YOUR CHAR NAME"**
 
 - **Visual feedback**  
   The application provides status updates and visual cues, such as highlighting the selected key entry and showing messages for user actions.
@@ -51,6 +51,23 @@ This is a **Tibia Key Presser** application designed to automate repetitive key 
 3. Run the application:
    ```bash
    python bot.py
+   ```
+
+## Compilation Instructions
+
+To compile the Python script into a standalone executable, you can use `PyInstaller`. Follow these steps:
+
+1. **Install PyInstaller** if you haven't already:
+
+   ```bash
+   pip install pyinstaller
+
+   ```
+
+2. **Compile the Script** using the following command:
+
+   ```bash
+   pyinstaller --onefile --noconsole --name tibia_key_presser --hidden-import comtypes.stream bot.py
    ```
 
 ## Usage
