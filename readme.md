@@ -1,87 +1,89 @@
 # Tibia Key Presser
 
-This is a **Tibia Key Presser** application designed to automate repetitive key presses within the Tibia game. It allows users to configure up to 8 key-delay pairs, specifying which keys to press and the delay between each key press. The tool is intended to streamline gameplay by simulating key presses at regular intervals based on user-defined settings.
+A simple utility application to automate key presses in Tibia. This tool allows you to set up multiple keys with custom delay intervals between key presses.
 
 ## Features
 
-- **Add up to 8 key-delay pairs**  
-  Users can define up to 8 different keys, each paired with a custom delay (in seconds) between presses.
+- Configure up to 8 different keys with custom delay intervals
+- Easy-to-use graphical interface
+- Automatic detection of Tibia window
+- Start/stop functionality with a single click
+- Real-time key binding
 
-- **Customizable delays**  
-  Delays can be set from **0 to 10 seconds**, with precision down to one decimal point, allowing for flexible automation.
+## Prerequisites
 
-- **Reset and delete functionality**  
-  Each key-delay pair can be individually reset or deleted, providing full control over the input configuration.
-
-- **Start/Stop controls**  
-  The key pressing script can be easily started or stopped with intuitive buttons. Once started, the defined keys will be automatically pressed with the set delays.
-
-- **Connects to the Tibia window**  
-  The application automatically detects the Tibia game window and sends key presses directly to it. When Tibia is properly found, window name will change to **"Tibia Key Presser - YOUR CHAR NAME"**
-
-- **Visual feedback**  
-  The application provides status updates and visual cues, such as highlighting the selected key entry and showing messages for user actions.
-
-- **Dynamic user interface**  
-  The interface adjusts based on user input, hiding or showing the "Add Key" button as needed depending on the number of configured key-delay pairs.
-
-## Requirements
-
-- Python 3.x
-- `tkinter` for the GUI
-- `pywinauto` for interacting with the Tibia game window
+- Python 3.6+
+- pywinauto 0.6.8+
 
 ## Installation
 
-1. Clone the repository:
+1. Clone this repository:
 
-   ```bash
-   git clone https://github.com/SkorczanFFF/tibia-key-presser.git
+   ```
+   git clone <repository-url>
    cd tibia-key-presser
-
    ```
 
-2. Install the required Python packages:
-
-   ```bash
-   pip install pywinauto
-
+2. Install the required dependencies:
    ```
-
-3. Run the application:
-   ```bash
-   python bot.py
-   ```
-
-## Compilation Instructions
-
-To compile the Python script into a standalone executable, you can use `PyInstaller`. Follow these steps:
-
-1. **Install PyInstaller** if you haven't already:
-
-   ```bash
-   pip install pyinstaller
-
-   ```
-
-2. **Compile the Script** using the following command:
-
-   ```bash
-   pyinstaller --onefile --noconsole --name tibia_key_presser --hidden-import comtypes.stream bot.py
+   pip install -r requirements.txt
    ```
 
 ## Usage
 
-1. Launch the application and configure the keys and delays.
-2. Press **Start** to begin the key pressing automation.
-3. The application will send the key presses to the Tibia window based on your configuration.
-4. You can add up to 8 keys, set delays between key presses, and remove or reset individual key configurations as needed.
-5. Press **Stop** to end the key pressing sequence at any time.
+### Running the Application
 
-## Background
+Run the application with Python:
 
-This tool was created to help automate the process of training **magic level** (MLVL) while the character is on trainers in Tibia. The idea is to simplify repetitive key presses used for this type of training. The application has been tested on **[Eloria](https://www.eloria.pl)**, a private Open Tibia Server.
+```
+python -m src.main
+```
 
----
+### Using the Key Presser
 
-_Note: This tool is intended for personal use and may violate the terms of service of some Tibia servers._
+1. Launch Tibia and login to your character
+2. Launch the Tibia Key Presser
+3. Click on a key input field and press the key you want to automate
+4. Set the delay interval in seconds
+5. Add more keys if needed (up to 8)
+6. Click "Start" to begin the key pressing
+7. Click "Stop" when you want to stop the automation
+
+## Building an Executable
+
+You can build a standalone executable using PyInstaller:
+
+```
+pip install pyinstaller
+pyinstaller --onefile src/main.py --name tibia_key_presser
+```
+
+The executable will be available in the `dist` directory.
+
+## Project Structure
+
+```
+tibia-key-presser/
+├── src/                     # Source code
+│   ├── __init__.py
+│   ├── main.py              # Application entry point
+│   ├── ui/                  # User interface
+│   │   ├── __init__.py
+│   │   ├── app_window.py    # Main window class
+│   │   └── components/      # UI components
+│   │       ├── __init__.py
+│   │       └── key_entry.py # Key entry component
+│   ├── core/                # Core functionality
+│   │   ├── __init__.py
+│   │   ├── key_presser.py   # Key pressing logic
+│   │   └── window_manager.py # Tibia window connection
+│   └── utils/               # Utilities
+│       ├── __init__.py
+│       └── constants.py     # Constants and configurations
+├── requirements.txt         # Dependencies
+└── README.md                # Documentation
+```
+
+## License
+
+This project is licensed under the MIT License.

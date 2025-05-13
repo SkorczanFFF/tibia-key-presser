@@ -2,11 +2,11 @@
 
 
 a = Analysis(
-    ['bot.py'],
+    ['src\\main.py'],
     pathex=[],
     binaries=[],
     datas=[],
-    hiddenimports=['comtypes.stream'],
+    hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -35,4 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['temp_icons\\tkp_icon.ico'],
 )
