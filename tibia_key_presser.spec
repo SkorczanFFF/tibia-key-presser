@@ -5,12 +5,14 @@ a = Analysis(
     ['src\\main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        ('temp_icons\\tkp_icon.ico', '.')
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['PIL', 'pillow', 'numpy', 'pandas', 'matplotlib', 'scipy', 'PyQt5', 'PySide2', 'wx'],
     noarchive=False,
     optimize=0,
 )

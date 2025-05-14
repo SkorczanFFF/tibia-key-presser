@@ -3,6 +3,8 @@ Main application window for the Tibia Key Presser.
 """
 import tkinter as tk
 from tkinter import messagebox
+import os
+import sys
 
 from src.ui.components.key_entry import KeyEntry
 from src.core.key_presser import KeyPresser
@@ -22,6 +24,9 @@ class AppWindow:
         self.root = root
         self.root.title("Tibia Key Presser")
         
+        # Set the window icon - check multiple possible locations
+        self._set_window_icon()
+            
         # Core components
         self.key_presser = KeyPresser()
         
@@ -34,6 +39,28 @@ class AppWindow:
         # Try to connect to Tibia window and update title
         self._update_window_title()
         
+    def _set_window_icon(self):
+        """Set the window icon, checking multiple possible locations."""
+        # Possible icon locations
+        icon_locations = [
+            "tkp_icon.ico",                             # Current directory
+            os.path.join("temp_icons", "tkp_icon.ico"), # Temp_icons directory
+        ]
+        
+        # If running from frozen executable, add the executable's directory
+        if getattr(sys, 'frozen', False):
+            base_dir = os.path.dirname(sys.executable)
+            icon_locations.append(os.path.join(base_dir, "tkp_icon.ico"))
+        
+        # Try each location
+        for icon_path in icon_locations:
+            try:
+                if os.path.exists(icon_path):
+                    self.root.iconbitmap(default=icon_path)
+                    return
+            except Exception:
+                continue
+            
     def _setup_ui(self):
         """Set up the UI components."""
         # Main frame for holding the input fields and buttons
@@ -43,10 +70,6 @@ class AppWindow:
         # Frame for key and delay entries
         self.entries_frame = tk.Frame(self.main_frame)
         self.entries_frame.grid(row=1, column=0, columnspan=6, pady=5, sticky="ew")
-        
-        # Key entries
-        self.key_entries = []
-        self._add_key_entry()  # Add the first entry
         
         # Frame for buttons
         self.button_frame = tk.Frame(self.main_frame)
@@ -77,6 +100,10 @@ class AppWindow:
         
         # Key binding for the whole application
         self.root.bind("<KeyPress>", self._handle_key_press)
+        
+        # Key entries
+        self.key_entries = []
+        self._add_key_entry()  # Add the first entry
     
     def _add_key_entry(self):
         """Add a new key-delay entry."""
