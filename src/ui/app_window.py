@@ -14,19 +14,21 @@ from src.utils.constants import MAX_KEY_PAIRS
 class AppWindow:
     """Main application window for the Tibia Key Presser."""
     
-    def __init__(self, root):
+    def __init__(self, root, loading_screen=None):
         """
         Initialize the application window.
         
         Args:
             root: The Tkinter root window
+            loading_screen: The loading screen instance to hide when ready
         """
         self.root = root
+        self.loading_screen = loading_screen
         self.root.title("Tibia Key Presser")
         
-        # Set the window icon - check multiple possible locations
+        # Set the window icon IMMEDIATELY before anything else
         self._set_window_icon()
-            
+        
         # Core components
         self.key_presser = KeyPresser()
         
@@ -41,25 +43,52 @@ class AppWindow:
         
     def _set_window_icon(self):
         """Set the window icon, checking multiple possible locations."""
+        # Get current working directory
+        current_dir = os.getcwd()
+        
         # Possible icon locations
         icon_locations = [
-            "tkp_icon.ico",                             # Current directory
-            os.path.join("temp_icons", "tkp_icon.ico"), # Temp_icons directory
+            "tkp_icon.ico",                             # Current directory (root)
+            os.path.join("icons", "tkp_icon.ico"),     # Icons directory
+            os.path.join(current_dir, "tkp_icon.ico"),  # Explicit current directory
         ]
         
-        # If running from frozen executable, add the executable's directory
+        # If running from frozen executable, add the executable's directory and PyInstaller temp paths
         if getattr(sys, 'frozen', False):
             base_dir = os.path.dirname(sys.executable)
-            icon_locations.append(os.path.join(base_dir, "tkp_icon.ico"))
+            icon_locations.extend([
+                os.path.join(base_dir, "tkp_icon.ico"),
+                os.path.join(base_dir, "icons", "tkp_icon.ico")
+            ])
+            
+            # PyInstaller creates a temporary directory for data files
+            # Try to find the icon in PyInstaller's temp directory
+            if hasattr(sys, '_MEIPASS'):
+                temp_dir = sys._MEIPASS
+                icon_locations.extend([
+                    os.path.join(temp_dir, "tkp_icon.ico"),
+                    os.path.join(temp_dir, "icons", "tkp_icon.ico")
+                ])
         
         # Try each location
         for icon_path in icon_locations:
             try:
                 if os.path.exists(icon_path):
-                    self.root.iconbitmap(default=icon_path)
+                    # Convert to absolute path to avoid issues
+                    abs_path = os.path.abspath(icon_path)
+                    self.root.iconbitmap(default=abs_path)
+                    print(f"Successfully set icon from: {abs_path}")
                     return
-            except Exception:
+            except Exception as e:
+                print(f"Failed to set icon from {icon_path}: {e}")
                 continue
+        
+        print("Warning: Could not find or set application icon")
+                
+    def _hide_loading_screen(self):
+        """Hide the loading screen after the main window is ready."""
+        if self.loading_screen:
+            self.loading_screen.hide()
             
     def _setup_ui(self):
         """Set up the UI components."""

@@ -6,13 +6,15 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('temp_icons\\tkp_icon.ico', '.')
+        ('icons/tkp_icon.ico', '.'),
+        ('icons/tkp_icon.png', '.'),
+        ('icons', 'icons')
     ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=['PIL', 'pillow', 'numpy', 'pandas', 'matplotlib', 'scipy', 'PyQt5', 'PySide2', 'wx'],
+    excludes=['numpy', 'pandas', 'matplotlib', 'scipy', 'PyQt5', 'PySide2', 'wx'],
     noarchive=False,
     optimize=0,
 )
@@ -37,5 +39,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['temp_icons\\tkp_icon.ico'],
+    icon='icons/tkp_icon.ico',
+    version=None,
 )
