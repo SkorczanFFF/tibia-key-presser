@@ -5,7 +5,7 @@ A simple tool that automatically presses keys in Tibia for you. Perfect for repe
 **Works in the background** - you can browse the web, watch videos, or do other things while it sends keys to Tibia.
 
 <p align="center">
-  <img src="screens/tkp_off.png" alt="Idle State" width="400"/>
+  <img src="screens/tkp_off.png" alt="Idle State" width="400"/><br>
   <img src="screens/tkp_on.png" alt="Running State" width="400"/>
 </p>
 
