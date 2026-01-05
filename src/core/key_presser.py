@@ -2,17 +2,19 @@
 Module for handling the key pressing functionality.
 """
 from threading import Thread
-from time import sleep
+from time import sleep, time
+from datetime import datetime
 from src.core.window_manager import TibiaWindowManager
 from src.utils.constants import CHECK_INTERVAL
 
 class KeyPresser:
     """Class to handle the key pressing functionality."""
     
-    def __init__(self):
+    def __init__(self, on_key_press=None):
         """Initialize the KeyPresser."""
         self.running = False
         self.threads = []
+        self.on_key_press = on_key_press
         
     def start(self, keys, delays):
         """
@@ -57,8 +59,17 @@ class KeyPresser:
         # Calculate how many small intervals we need
         intervals = int(delay / CHECK_INTERVAL)
         
+        last_press = time()
         while self.running:
+            now = time()
+            actual_interval = now - last_press
+            last_press = now
+            timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            print(f"[{timestamp}] [{key}] interval: {actual_interval:.3f}s (expected: {delay}s)")
+            
             TibiaWindowManager.send_key_to_window(window, key)
+            if self.on_key_press:
+                self.on_key_press(key)
             
             # Break down the delay into smaller intervals
             for _ in range(intervals):
