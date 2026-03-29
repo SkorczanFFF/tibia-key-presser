@@ -42,6 +42,7 @@ Messages appear at the bottom left of the window:
 
 - `⌨ Press a key to bind...` - Click detected, now press your desired key
 - `⚠ Bind at least one key` - You tried to start without any keys configured
+- `Pick character first` - Tibia window not found or character not logged in
 
 ---
 
@@ -49,14 +50,14 @@ Messages appear at the bottom left of the window:
 
 - **Windows 10 or Windows 11**
 - **Tibia client** must be running and logged in
-- No installation needed if using the .exe file
+- No installation needed if using the standalone `.exe`
 
 ---
 
 ## Quick Start (For Regular Users)
 
 ### Step 1: Download
-Download `tibia_key_presser.exe` from the [`dist`](dist/) folder.
+Download `tibia_key_presser.exe` from the [Releases](https://github.com/SkorczanFFF/tibia-key-presser/releases) page (or from the [`dist`](dist/) folder).
 
 ### Step 2: Prepare Tibia
 Open Tibia and log into your character. The game can be minimized or in the background.
@@ -91,7 +92,7 @@ Click the red **■ Stop** button when you're done.
 ## For Developers
 
 ### Prerequisites
-- Python 3.12 or newer
+- Python 3.8 or newer
 - pip (Python package manager)
 
 ### Installation
@@ -130,24 +131,19 @@ Output: `dist/tibia_key_presser.exe`
 ```
 tibia-key-presser/
 ├── src/
-│   ├── main.py                 # Application entry point
-│   ├── ui/
-│   │   ├── app_window.py       # Main window and controls
-│   │   └── components/
-│   │       └── key_entry.py    # Individual key-delay row component
-│   ├── core/
-│   │   ├── key_presser.py      # Threaded key pressing logic
-│   │   └── window_manager.py   # Tibia window detection and communication
-│   └── utils/
-│       ├── constants.py        # App settings (max keys, intervals)
-│       └── paths.py            # Icon/resource path resolution
+│   ├── __init__.py
+│   ├── main.py              # Application entry point
+│   ├── app_window.py        # Main window UI and controls (tkinter)
+│   ├── key_entry.py         # Key-delay row component with animations
+│   ├── key_presser.py       # Threaded key pressing logic
+│   └── window_manager.py    # Tibia window detection and keystroke sending
 ├── icons/
-│   ├── tkp_icon.ico            # Windows executable icon
-│   └── tkp_icon.png            # Application window icon
-├── screens/                    # Screenshots for documentation
-├── dist/                       # Compiled executable
-├── requirements.txt            # Python dependencies
-├── tibia_key_presser.spec      # PyInstaller build configuration
+│   ├── tkp_icon.ico         # Windows executable icon
+│   └── tkp_icon.png         # Application window icon
+├── screens/                 # Screenshots for documentation
+├── requirements.txt         # Python dependencies
+├── tibia_key_presser.spec   # PyInstaller build configuration
+├── .gitignore
 └── readme.md
 ```
 
@@ -157,6 +153,7 @@ tibia-key-presser/
 
 | Problem | Solution |
 |---------|----------|
+| **"Pick character first"** | Make sure Tibia is running and you're logged into a character |
 | **Character name not showing** | Make sure Tibia is running and you're logged in |
 | **Keys not being sent** | Check if Tibia window title starts with "Tibia - " |
 | **App won't start** | Run as Administrator, or check Windows Defender isn't blocking it |
@@ -170,28 +167,31 @@ tibia-key-presser/
 - Window detection uses regex pattern: `^Tibia - .*`
 - Each key runs in a separate daemon thread
 - Delays are broken into 100ms intervals for responsive stopping
+- Re-validates the Tibia window handle every 5 seconds to detect disconnects
 - Keys are sent using `send_keystrokes()` method
 
 ---
 
 ## Good to Know
 
-- ✅ Works with Tibia minimized or in background
-- ✅ Each key has independent timing
-- ✅ Stops immediately when you click Stop
-- ⚠️ Windows only (uses Windows-specific APIs)
-- ⚠️ Tibia must be running before starting the bot
-- ⚠️ No delay randomization - timing is consistent
+- Works with Tibia minimized or in background
+- Each key has independent timing
+- Stops within ~100ms when you click Stop
+- Windows only (uses Windows-specific APIs)
+- Tibia must be running and logged in before starting
+- No delay randomization — timing is consistent (predictable intervals)
 
 ---
 
 ## License
 
-**MIT License** - free to use, modify, and distribute.
+This project is free to use, modify, and distribute.
+
+> **Note:** A `LICENSE` file has not been added to the repository yet. If you intend to distribute this project, consider adding an explicit license (e.g., MIT).
 
 ---
 
 ## Links
 
-- 📁 [GitHub Repository](https://github.com/SkorczanFFF/tibia-key-presser)
-- 📥 [Download Executable](https://github.com/SkorczanFFF/tibia-key-presser/tree/master/dist)
+- [GitHub Repository](https://github.com/SkorczanFFF/tibia-key-presser)
+- [Download Executable](https://github.com/SkorczanFFF/tibia-key-presser/releases)

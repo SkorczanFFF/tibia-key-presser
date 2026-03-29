@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 # Distribution / packaging
-dist/
 build/
 *.egg-info/
 
@@ -12,9 +11,6 @@ build/
 venv/
 env/
 .env/
-
-# PyInstaller
-*.spec
 
 # IDE files
 .idea/
@@ -25,3 +21,6 @@ env/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Claude Code memory (local only)
+.claude/

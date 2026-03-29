@@ -7,8 +7,6 @@ a = Analysis(
     binaries=[],
     datas=[
         ('icons/tkp_icon.ico', '.'),
-        ('icons/tkp_icon.png', '.'),
-        ('icons', 'icons')
     ],
     hiddenimports=[],
     hookspath=[],

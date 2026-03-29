@@ -1,12 +1,14 @@
 """Main entry point for the Tibia Key Presser application."""
+from __future__ import annotations
+
 import tkinter as tk
-from src.ui.app_window import AppWindow
+from src.app_window import AppWindow
 
 
-def main():
+def main() -> None:
     """Launch the Tibia Key Presser application."""
     root = tk.Tk()
-    app = AppWindow(root)
+    AppWindow(root)
     root.mainloop()
 
 
